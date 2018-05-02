@@ -62,11 +62,11 @@ include(CMakeParseArguments)
 #     DEPENDS a_linked_target "path/to/a_linked_library.so" ...
 #     INSTALL
 #)
-# 
+#
 macro(add_qt_android_apk TARGET SOURCE_TARGET)
 
     # parse the macro arguments
-    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD;BUILDTOOLS_REVISION" "DEPENDS;KEYSTORE" ${ARGN})
+    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD;BUILDTOOLS_REVISION;QML_DIR" "DEPENDS;KEYSTORE" ${ARGN})
 
     # extract the full path of the source target binary
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -138,6 +138,10 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         endif()
         endforeach()
         set(QT_ANDROID_APP_EXTRA_LIBS "\"android-extra-libs\": \"${EXTRA_LIBS}\",")
+    endif()
+
+    if(ARG_QML_DIR)
+        set(QML_ROOT_PATH "\"qml-root-path\": \"${ARG_QML_DIR}\",")
     endif()
 
     # make sure that the output directory for the Android package exists
