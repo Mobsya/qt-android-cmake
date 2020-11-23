@@ -67,15 +67,7 @@ include(CMakeParseArguments)
 macro(add_qt_android_apk TARGET SOURCE_TARGET)
 
     # parse the macro arguments
-<<<<<<< HEAD
-    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD;BUILDTOOLS_REVISION;QML_DIR" "DEPENDS;KEYSTORE" ${ARGN})
-=======
-    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD" "DEPENDS;KEYSTORE" ${ARGN})
-<<<<<<< HEAD
->>>>>>> 250fdb2caac3413ce9b31e135a36034668e50c90
-=======
->>>>>>> laurentgomilla/master
->>>>>>> d2078f7c7de62fbd95b1b288470c78bb31f1a373
+    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD;QML_DIR" "DEPENDS;KEYSTORE" ${ARGN})
 
     # extract the full path of the source target binary
     set(QT_ANDROID_APP_PATH "$<TARGET_FILE:${SOURCE_TARGET}>")  # full file path to the app's main shared library
@@ -220,11 +212,10 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         set(QT_ANDROID_APP_EXTRA_LIBS "\"android-extra-libs\": \"${EXTRA_LIBS}\",")
     endif()
 
-<<<<<<< HEAD
     if(ARG_QML_DIR)
         set(QML_ROOT_PATH "\"qml-root-path\": \"${ARG_QML_DIR}\",")
-=======
-<<<<<<< HEAD
+    endif()
+
     # determine whether to use the gcc- or llvm/clang- toolchain;
     # if ANDROID_USE_LLVM was explicitly set, use its value directly,
     # otherwise ANDROID_TOOLCHAIN value (set by the NDK's toolchain file)
@@ -237,8 +228,6 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         set(QT_ANDROID_USE_LLVM "false")
     endif()
 
-=======
->>>>>>> d2078f7c7de62fbd95b1b288470c78bb31f1a373
     # set some toolchain variables used by androiddeployqt;
     # unfortunately, Qt tries to build paths from these variables although these full paths
     # are already available in the toochain file, so we have to parse them if using gcc
@@ -247,7 +236,6 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         set(QT_ANDROID_TOOLCHAIN_VERSION)
         set(QT_ANDROID_TOOL_PREFIX "llvm")
     else()
-<<<<<<< HEAD
         string(REGEX MATCH "${QT_ANDROID_NDK_ROOT}/toolchains/(.*)-(.*)/prebuilt/.*/bin/(.*)-" ANDROID_TOOLCHAIN_PARSED ${ANDROID_TOOLCHAIN_PREFIX})
         if(ANDROID_TOOLCHAIN_PARSED)
             set(QT_ANDROID_TOOLCHAIN_PREFIX ${CMAKE_MATCH_1})
@@ -256,11 +244,6 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         else()
             message(FATAL_ERROR "Failed to parse ANDROID_TOOLCHAIN_PREFIX to get toolchain prefix and version and tool prefix")
         endif()
->>>>>>> 250fdb2caac3413ce9b31e135a36034668e50c90
-=======
-        message(FATAL_ERROR "Failed to parse ANDROID_TOOLCHAIN_ROOT to get toolchain prefix and version")
->>>>>>> laurentgomilla/master
->>>>>>> d2078f7c7de62fbd95b1b288470c78bb31f1a373
     endif()
 
     # make sure that the output directory for the Android package exists
