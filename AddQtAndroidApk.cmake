@@ -270,6 +270,10 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         endif()
     endif()
 
+    #until I find the right variable to reach the vpl3 and scratch folder
+    file(COPY ../../../vpl3-thymio-suite/ DESTINATION "${QT_ANDROID_APP_BINARY_DIR}/assets/vpl3-thymio-suite")
+    file(COPY ../../../scratch/ DESTINATION "${QT_ANDROID_APP_BINARY_DIR}/assets/scratch")
+
     # check if the apk must be installed to the device
     if(ARG_INSTALL)
         set(INSTALL_OPTIONS --reinstall)
